@@ -12,8 +12,10 @@ export type LocaleData = Record<
 export function gettext(data: LocaleData): Translator {
   const domain = data['messages'] ?? {}
   const header = domain['']
-  const locale = header && !Array.isArray(header) ? header.lang : undefined
-  if (!locale) throw new Error('msgid/gettext: the locale data has no lang in its "" header')
+  const lang = header && !Array.isArray(header) ? header.lang : undefined
+  if (!lang) throw new Error('msgid/gettext: the locale data has no lang in its "" header')
+  // gettext writes pt_BR or sr@latin; Intl wants BCP 47. Throws on a malformed tag.
+  const [locale = lang] = Intl.getCanonicalLocales(lang.replace(/@.*/, '').replace(/_/g, '-'))
   // Tannin types each entry as [string, string], but a language can have more plural forms.
   const forms = new Tannin(data as TanninLocaleData)
   return {
