@@ -1,0 +1,6 @@
+dist/
+pnpm-lock.yaml
+coverage/
+# The spec as written; not reformatted.
+CONTRACT.md
+PR_BODY.md

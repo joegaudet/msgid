@@ -1,0 +1,6 @@
+{
+  "$comment": "Not part of the build. Covers tests and tooling: type-aware linting uses it, and `pnpm typecheck` checks it.",
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": { "noEmit": true, "allowJs": true },
+  "include": ["src", "test", "bin", "eslint.config.js", "*.config.ts"]
+}
