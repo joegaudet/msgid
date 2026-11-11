@@ -49,6 +49,7 @@ msgstr[2] "{count} plików"
 export const polishIcu: Record<string, string> = {
   'test.greeting': 'Cześć, {name}',
   'test.pair': '{b} i {a}',
+  'test.untranslated': '',
   'test.open.verb': 'Otwórz',
   'test.open.adjective': 'Otwarty',
   'test.files':
@@ -59,6 +60,7 @@ export const polishIcu: Record<string, string> = {
 export const polishI18next: Record<string, string> = {
   'test.greeting': 'Cześć, {{name}}',
   'test.pair': '{{b}} i {{a}}',
+  'test.untranslated': '',
   'test.open.verb': 'Otwórz',
   'test.open.adjective': 'Otwarty',
   'test.files_one': '{{count}} plik',

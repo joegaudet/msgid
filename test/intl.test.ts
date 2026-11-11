@@ -8,13 +8,13 @@ contract('msgid/intl (FormatJS)', () => ({
   en: intl(createIntl({ locale: 'en', messages: {} })),
 }))
 
-// ember-intl's service: an array locale, primaryLocale, exists(), and formatMessage().
+// ember-intl's service: an array locale, primaryLocale, getTranslation(), and formatMessage().
 const emberIntl = (locale: string, messages: Record<string, string>) => {
   const formatjs = createIntl({ locale, messages })
   return {
     locale: [locale],
     primaryLocale: locale,
-    exists: (id: string) => id in messages,
+    getTranslation: (id: string) => messages[id],
     formatMessage: formatjs.formatMessage,
   }
 }

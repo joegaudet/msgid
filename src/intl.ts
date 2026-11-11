@@ -10,7 +10,7 @@ export interface IntlLike {
   /** FormatJS */
   readonly messages?: Record<string, unknown>
   /** ember-intl */
-  exists?(id: string): boolean
+  getTranslation?(id: string, locale: string): unknown
   formatMessage(
     descriptor: { id: string; defaultMessage?: string; description?: string },
     values?: Record<string, unknown>,
@@ -20,19 +20,29 @@ export interface IntlLike {
 /** A translator over FormatJS (`createIntl`, react-intl) or ember-intl, keyed by message id. */
 export function intl(intl: IntlLike): Translator {
   return {
-    get locale() {
+    get locale(): string {
       return (
         intl.primaryLocale ?? (typeof intl.locale === 'string' ? intl.locale : intl.locale[0]) ?? ''
       )
     },
     t(message: Message, values: Record<string, unknown> = {}) {
-      const has = intl.exists ? intl.exists(message.id) : intl.messages?.[message.id] !== undefined
-      if (!has) return format(message, values)
       const { id, description } = message
-      return intl.formatMessage(
-        { id, defaultMessage: icu(message), ...(description === undefined ? {} : { description }) },
-        values,
+      // On a miss FormatJS would render defaultMessage itself; format() keeps English identical.
+      // ember-intl formats with its primary locale only, so look there (not exists(), which checks all).
+      const has = Boolean(
+        intl.getTranslation ? intl.getTranslation(id, this.locale) : intl.messages?.[id],
       )
+      const text =
+        has &&
+        intl.formatMessage(
+          {
+            id,
+            defaultMessage: icu(message),
+            ...(description === undefined ? {} : { description }),
+          },
+          values,
+        )
+      return text || format(message, values)
     },
   }
 }

@@ -32,7 +32,8 @@ interface Translator {
 ```
 
 An explicit argument wins, then the translator, then English. Every adapter falls back to English
-(`format()`) for a message its catalog lacks, so an app can translate one string at a time.
+(`format()`) for a message its catalog lacks or holds as an empty string, so an app can translate
+one string at a time.
 
 ```ts
 import { format, pseudo } from 'msgid'
@@ -60,7 +61,7 @@ optional peer dependencies.
 import { gettext } from 'msgid/gettext'
 import pl from './translations/pl.json' // from `msgid po2json pl.po`
 
-const translator = gettext(pl) // locale from the .po file's Language header
+const translator = gettext(pl) // locale from the .po file's Language header, as BCP 47 (pt_BR → pt-BR)
 ```
 
 Uses [tannin] for `Plural-Forms`, and handles `msgctxt` and `msgid_plural`.
@@ -88,8 +89,8 @@ const translator = intl(createIntl({ locale: 'pl', messages }))
 ```
 
 Calls `formatMessage({ id, defaultMessage, description }, values)` with the ICU form of the
-English as `defaultMessage`. An ember-intl service works too (its locale comes from
-`primaryLocale`).
+English as `defaultMessage`. An ember-intl service works too: its locale comes from
+`primaryLocale`, and a message counts as translated when `getTranslation(id, primaryLocale)` has it.
 
 ### Lingui
 
@@ -99,6 +100,9 @@ import { lingui } from 'msgid/lingui'
 
 const translator = lingui(i18n) // locale is i18n.locale
 ```
+
+Load catalogs compiled by `lingui compile` (or call `i18n.setMessagesCompiler`): production builds
+of Lingui don't compile ICU strings at runtime.
 
 ### Ember
 
@@ -150,6 +154,15 @@ fall back to English.
 
 The same builders are functions in `msgid/catalog`: `toPot`, `toIcuJson`, `toI18nextJson` and
 `poToTannin`.
+
+## Known limits
+
+- Lingui ignores ICU's `'#'` quoting, so a literal `#` in a plural message renders as the count
+  under Lingui.
+- FormatJS reads `<word>` as a rich-text tag. English with angle brackets (`Press <Enter>`)
+  reports a `FORMAT_ERROR` there and renders the raw message, without its values filled in.
+- The CLI resolves module specifiers with `require.resolve` from the current directory, so a
+  package whose `exports` entry has only an `"import"` condition does not resolve.
 
 ## License
 

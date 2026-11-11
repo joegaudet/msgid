@@ -17,7 +17,7 @@ export function contract(
       expect(en.locale).toBe('en')
     })
 
-    it('falls back to format() English when the catalog lacks a message', () => {
+    it('falls back to format() English when the catalog lacks a message or has it empty', () => {
       const cases: [Message, Record<string, unknown>?][] = [
         [messages.untranslated, { thing: 'milk & <eggs>' }],
         [messages.untranslated, {}],

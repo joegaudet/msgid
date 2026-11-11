@@ -1,6 +1,8 @@
 import { createIntl } from '@formatjs/intl'
 import { po } from 'gettext-parser'
 import i18next from 'i18next'
+import { setupI18n } from '@lingui/core'
+import { compileMessage } from '@lingui/message-utils/compileMessage'
 import { describe, expect, it } from 'vitest'
 import { poToTannin, toI18nextJson, toIcuJson, toPot } from '../src/catalog.js'
 import { format, type Message } from '../src/index.js'
@@ -58,6 +60,14 @@ describe('toIcuJson', () => {
     const intl = createIntl({ locale: 'en', messages: toIcuJson(all) })
     for (const [m, values] of cases)
       expect(intl.formatMessage({ id: m.id }, values)).toBe(format(m, values))
+  })
+
+  it('renders like format() through Lingui', () => {
+    const i18n = setupI18n({ locale: 'en', messages: { en: toIcuJson(all) } })
+    i18n.setMessagesCompiler(compileMessage)
+    // Lingui ignores ICU's '#' quoting, so a literal # in a plural renders as the count there.
+    const withoutHash = cases.filter(([m]) => m !== messages.ranked)
+    for (const [m, values] of withoutHash) expect(i18n._(m.id, values)).toBe(format(m, values))
   })
 })
 

@@ -15,13 +15,15 @@ export function i18next(i18n: I18n): Translator {
         nsSeparator: false,
         ...(typeof count === 'number' ? { count } : {}),
       } as const
-      if (!i18n.exists(message.id, options)) return format(message, values)
-      // A Translator returns plain text; escaping is the renderer's job.
-      return i18n.t(message.id, {
+      // A miss or an empty translation comes back as '' and falls back to English. A Translator
+      // returns plain text; escaping is the renderer's job.
+      const text = i18n.t(message.id, {
         ...options,
+        defaultValue: '',
         replace: values,
         interpolation: { escapeValue: false },
       })
+      return text || format(message, values)
     },
   }
 }
