@@ -3,8 +3,10 @@
   "compilerOptions": {
     "target": "ES2022",
     "lib": ["ES2022"],
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    /* Bundler resolution reads tannin's ESM-style types the way Node and bundlers load it.
+       Imports still carry .js extensions so the tsc output runs in Node as is. */
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "moduleDetection": "force",
     "verbatimModuleSyntax": true,
     "isolatedModules": true,

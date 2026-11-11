@@ -52,7 +52,8 @@ export function toI18nextJson(messages: Message[]): Record<string, string> {
 }
 
 /** A translated .po file as Tannin (Jed 1.x) locale data, for `msgid/gettext`. */
-export function poToTannin(file: string | Buffer, domain = 'messages'): LocaleData {
+export function poToTannin(file: string | Buffer): LocaleData {
+  const domain = 'messages'
   const { headers, translations } = po.parse(file)
   const entries: LocaleData[string] = {
     '': { domain, lang: headers['Language'] ?? '', plural_forms: headers['Plural-Forms'] ?? '' },
