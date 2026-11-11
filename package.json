@@ -52,11 +52,10 @@
     "./package.json": "./package.json"
   },
   "bin": {
-    "msgid": "./bin/msgid.js"
+    "msgid": "./dist/bin.js"
   },
   "files": [
     "dist",
-    "bin",
     "CONTRACT.md",
     "README.md",
     "LICENSE"

@@ -22,13 +22,15 @@ export function toPot(messages: Message[]): string {
       },
     }
   }
-  return po
-    .compile({
-      charset: 'utf-8',
-      headers: { 'Content-Type': 'text/plain; charset=UTF-8' },
-      translations,
-    })
-    .toString('utf8')
+  return (
+    po
+      .compile({
+        charset: 'utf-8',
+        headers: { 'Content-Type': 'text/plain; charset=UTF-8' },
+        translations,
+      })
+      .toString('utf8') + '\n'
+  )
 }
 
 /** id → ICU MessageFormat, for FormatJS, ember-intl and Lingui. */
