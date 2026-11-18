@@ -1,0 +1,107 @@
+{
+  "name": "msgid",
+  "version": "0.0.0",
+  "description": "The shared translator contract for ember-joinery, ember-formwright and real-enums: types, an English formatter, a pseudo-locale, adapters for gettext, i18next, FormatJS/ember-intl and Lingui, and a catalog CLI.",
+  "keywords": [
+    "i18n",
+    "gettext",
+    "translator",
+    "i18next",
+    "ember-intl",
+    "formatjs",
+    "lingui"
+  ],
+  "license": "MIT",
+  "author": "Joe Gaudet joe@joegaudet.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joegaudet/msgid.git",
+    "directory": "packages/msgid"
+  },
+  "homepage": "https://github.com/joegaudet/msgid#readme",
+  "bugs": "https://github.com/joegaudet/msgid/issues",
+  "type": "module",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./gettext": {
+      "types": "./dist/gettext.d.ts",
+      "default": "./dist/gettext.js"
+    },
+    "./i18next": {
+      "types": "./dist/i18next.d.ts",
+      "default": "./dist/i18next.js"
+    },
+    "./intl": {
+      "types": "./dist/intl.d.ts",
+      "default": "./dist/intl.js"
+    },
+    "./lingui": {
+      "types": "./dist/lingui.d.ts",
+      "default": "./dist/lingui.js"
+    },
+    "./catalog": {
+      "types": "./dist/catalog.d.ts",
+      "default": "./dist/catalog.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "msgid": "./dist/bin.js"
+  },
+  "files": [
+    "dist",
+    "CHANGELOG.md",
+    "CONTRACT.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "gettext-parser": "^10.0.0"
+  },
+  "peerDependencies": {
+    "@formatjs/intl": ">=2",
+    "@lingui/core": ">=4",
+    "i18next": ">=21",
+    "tannin": "^1.2.0"
+  },
+  "peerDependenciesMeta": {
+    "@formatjs/intl": {
+      "optional": true
+    },
+    "@lingui/core": {
+      "optional": true
+    },
+    "i18next": {
+      "optional": true
+    },
+    "tannin": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@formatjs/intl": "^6.1.5",
+    "@lingui/core": "^6.12.0",
+    "@lingui/message-utils": "^6.12.0",
+    "@types/gettext-parser": "^9.0.0",
+    "@types/node": "^26.6.6",
+    "i18next": "^27.1.1",
+    "tannin": "^1.2.0",
+    "typescript": "^6.0.3",
+    "vitest": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
