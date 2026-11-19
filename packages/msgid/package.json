@@ -1,6 +1,6 @@
 {
   "name": "msgid",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "The shared translator contract for ember-joinery, ember-formwright and real-enums: types, an English formatter, a pseudo-locale, adapters for gettext, i18next, FormatJS/ember-intl and Lingui, and a catalog CLI.",
   "keywords": [
     "i18n",
