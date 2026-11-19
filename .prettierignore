@@ -4,3 +4,4 @@ coverage/
 # The spec as written; not reformatted.
 CONTRACT.md
 PR_BODY.md
+.changeset/*.md
