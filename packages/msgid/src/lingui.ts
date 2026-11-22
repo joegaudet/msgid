@@ -1,3 +1,8 @@
+/**
+ * The Lingui adapter.
+ *
+ * @module msgid/lingui
+ */
 import type { I18n } from '@lingui/core'
 import { format } from './format.js'
 import { icu } from './icu.js'

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>msgid</title>
+    <meta
+      name="description"
+      content="The shared translator contract for ember-joinery, ember-formwright and real-enums. Translate their built-in strings with gettext, i18next, FormatJS, ember-intl or Lingui."
+    />
+    <link rel="canonical" href="https://joegaudet.com/msgid/" />
+    <!-- Link previews (Slack, X, LinkedIn, iMessage). The card's source is docs/social-card.html. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="msgid" />
+    <meta property="og:title" content="msgid: one translator for every library's strings" />
+    <meta
+      property="og:description"
+      content="The shared translator contract for ember-joinery, ember-formwright and real-enums. Translate their built-in strings with gettext, i18next, FormatJS, ember-intl or Lingui."
+    />
+    <meta property="og:url" content="https://joegaudet.com/msgid/" />
+    <meta property="og:image" content="https://joegaudet.com/msgid/social-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="msgid: one translator for every library's strings." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.0.6/css/pico.min.css"
+    />
+    <!-- Code blocks are dark in both schemes, like an editor, so one theme. -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap"
+    />
+    <link rel="stylesheet" href="site.css" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="text/plain" href="llms.txt" title="llms.txt" />
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="container">
+        <ul>
+          <li class="brand">
+            <a href="https://joegaudet.com/" class="brand-link"
+              ><img src="favicon.svg" alt="" width="28" height="28" /><strong>msgid</strong></a
+            >
+          </li>
+        </ul>
+        <ul>
+          <li><a href="#usage">Usage</a></li>
+          <li><a href="api/">API</a></li>
+          <li><a href="https://github.com/joegaudet/msgid">GitHub</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <header class="hero-band">
+      <div class="container hero">
+        <div class="hero-copy">
+          <p class="eyebrow">i18n for Joe Gaudet's libraries</p>
+          <h1>One translator for <span class="gradient-text">every library's strings</span>.</h1>
+          <p class="hero-sub">
+            The shared translator contract for ember-joinery, ember-formwright and real-enums.
+            Translate their built-in strings with the i18n system your app already uses: gettext
+            first-class, i18next, FormatJS (and so ember-intl) and Lingui through adapters.
+          </p>
+          <div class="hero-actions">
+            <a href="api/" role="button">API reference</a>
+            <a href="https://github.com/joegaudet/msgid" role="button" class="ghost">
+              <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+                <path
+                  fill="currentColor"
+                  d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+                />
+              </svg>
+              GitHub
+            </a>
+          </div>
+          <div class="install">
+            <span class="prompt" aria-hidden="true">$</span>
+            <code>npm i msgid</code>
+          </div>
+          <p class="install-note">Then install the i18n library its adapter wraps, if any.</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section id="usage">
+        <p class="eyebrow">Usage</p>
+        <h2>Pick an adapter, get a translator.</h2>
+        <p>
+          A <code>Translator</code> is a locale and a <code>t(message, values)</code> function.
+          Every adapter falls back to English for a message its catalog lacks, so you can translate
+          one string at a time.
+        </p>
+        <pre><code class="language-ts">import { format, pseudo } from 'msgid'
+
+format({ id: 'x.files', message: '{count} file', plural: '{count} files' }, { count: 2 })
+// '2 files'
+
+pseudo().t({ id: 'x.hi', message: 'Hi {name}' }, { name: 'Ada' })
+// '⟦Ĥí Ada⟧' (locale 'en-XA'), to spot strings that skipped the translator in tests</code></pre>
+        <pre><code class="language-ts">import { gettext } from 'msgid/gettext'
+import pl from './translations/pl.json' // from `msgid po2json pl.po`
+
+const translator = gettext(pl) // locale from the .po file's Language header</code></pre>
+        <p>
+          The <a href="api/">API reference</a> covers every adapter and catalog builder; the
+          <a href="https://github.com/joegaudet/msgid/tree/main/packages/msgid#readme">README</a>
+          has the Ember, i18next, FormatJS and Lingui setup and the catalog CLI.
+        </p>
+      </section>
+    </main>
+
+    <footer class="container">
+      <small>
+        MIT © Joe Gaudet ·
+        <a href="api/">API</a> · <a href="https://github.com/joegaudet/msgid#readme">README</a> ·
+        <a href="llms.txt">llms.txt</a>
+      </small>
+      <p class="family">
+        <small>
+          More open source from <a href="https://joegaudet.com/">Joe Gaudet</a>:
+          <a href="https://joegaudet.com/harnessed/">harnessed</a> ·
+          <a href="https://joegaudet.com/real-enums/">real-enums</a> ·
+          <a href="https://joegaudet.com/ember-formwright/">Formwright</a> ·
+          <a href="https://joegaudet.com/ember-joinery/">Joinery</a> ·
+          <a href="https://joegaudet.com/switchyard/">switchyard</a> ·
+          <a href="https://joegaudet.com/msgid/" aria-current="page">msgid</a>
+        </small>
+      </p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "msgid",
+  "entryPointStrategy": "packages",
+  "entryPoints": ["packages/*"],
+  "packageOptions": {
+    "entryPoints": [
+      "src/index.ts",
+      "src/gettext.ts",
+      "src/i18next.ts",
+      "src/intl.ts",
+      "src/lingui.ts",
+      "src/catalog.ts"
+    ],
+    "validation": {
+      "notExported": true,
+      "invalidLink": true,
+      "notDocumented": true
+    },
+    "requiredToBeDocumented": [
+      "Enum",
+      "Variable",
+      "Function",
+      "Class",
+      "Interface",
+      "TypeAlias",
+      "Method",
+      "Accessor"
+    ]
+  },
+  "outputs": [
+    { "name": "html", "path": "docs/api" },
+    { "name": "markdown", "path": "docs/api-md" },
+    { "name": "json", "path": "docs/api/api.json" }
+  ],
+  "plugin": ["typedoc-plugin-markdown", "./scripts/typedoc-site.mjs"],
+  "readme": "none",
+  "hostedBaseUrl": "https://joegaudet.com/msgid/api/",
+  "customCss": "docs/api.css",
+  "favicon": "docs/site/favicon.svg",
+  "navigationLinks": {
+    "Home": "https://joegaudet.com/msgid/",
+    "GitHub": "https://github.com/joegaudet/msgid"
+  },
+  "excludeInternal": true,
+  "excludePrivate": true,
+  "treatWarningsAsErrors": true,
+  "highlightLanguages": ["bash", "javascript", "json", "typescript"]
+}

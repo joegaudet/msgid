@@ -1,3 +1,9 @@
+/**
+ * Catalog builders, the functions behind the `msgid` CLI: gettext templates, ICU and i18next
+ * JSON, and `.po` files to gettext locale data.
+ *
+ * @module msgid/catalog
+ */
 import { po, type GetTextTranslationRecord } from 'gettext-parser'
 import type { LocaleData } from './gettext.js'
 import { icu } from './icu.js'

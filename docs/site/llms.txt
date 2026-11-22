@@ -1,0 +1,61 @@
+# msgid
+
+> The shared translator contract for ember-joinery, ember-formwright and real-enums. Those
+> libraries show built-in strings; msgid lets an app translate all of them with the i18n system
+> it already uses: gettext first-class, i18next, FormatJS (and so ember-intl) and Lingui through
+> adapters. It also ships an English formatter, a pseudo-locale and a catalog CLI.
+
+Install with `npm i msgid`. Import the contract, `format` and `pseudo` from `msgid`; the
+adapters from `msgid/gettext`, `msgid/i18next`, `msgid/intl` and `msgid/lingui`; the catalog
+builders from `msgid/catalog`. The adapters' libraries are optional peer dependencies.
+
+## Rules for writing code with msgid
+
+1. A library never depends on msgid at runtime. Apps install it to plug their i18n system in.
+2. A `Message` is `{ id, message, plural?, context?, description? }`. `id` is
+   `<library>.<component>.<name>`; `message` is the English text and the gettext msgid.
+   Placeholders are `{name}`.
+3. A `Translator` is `{ locale, t(message, values?) }`. Build one with an adapter; do not write
+   lookup code by hand. In Ember, register it as `translator:main`.
+4. Plurals are chosen by `values.count`, which must be a number.
+5. Every adapter falls back to English (`format()`) for a missing or empty translation, so an
+   app can translate one string at a time.
+6. A translator returns plain text. Escaping is the renderer's job.
+7. Build catalogs from the libraries' `messages` modules with the CLI (`msgid pot`, `msgid icu`,
+   `msgid i18next`, `msgid po2json`) or the same functions in `msgid/catalog`.
+8. Use `pseudo()` in tests to spot strings that skipped the translator.
+
+## Example
+
+```ts
+import { format, pseudo } from 'msgid'
+import { gettext } from 'msgid/gettext'
+import pl from './translations/pl.json' // from `msgid po2json pl.po`
+
+format({ id: 'x.files', message: '{count} file', plural: '{count} files' }, { count: 2 })
+// '2 files'
+
+pseudo().t({ id: 'x.hi', message: 'Hi {name}' }, { name: 'Ada' })
+// '⟦Ĥí Ada⟧'
+
+const translator = gettext(pl) // locale from the .po file's Language header
+```
+
+## Docs
+
+- [API reference](https://joegaudet.com/msgid/api/): every export, from the latest release
+- [llms-full.txt](https://joegaudet.com/msgid/api/llms-full.txt): this file followed by the
+  whole API reference as Markdown
+- [api.json](https://joegaudet.com/msgid/api/api.json): the API reference as TypeDoc's JSON
+  model, for tools
+- [Package README](https://github.com/joegaudet/msgid/tree/main/packages/msgid#readme): every
+  adapter, the CLI and the known limits
+- [Contract](https://github.com/joegaudet/msgid/blob/main/packages/msgid/CONTRACT.md): the full
+  translator contract
+
+## Related
+
+- [real-enums](https://joegaudet.com/real-enums/): enums that are real classes; `setTranslator`
+  takes a msgid translator
+- [Formwright](https://joegaudet.com/ember-formwright/): forms for Ember
+- [Joinery](https://joegaudet.com/ember-joinery/): shadcn/ui for Ember
