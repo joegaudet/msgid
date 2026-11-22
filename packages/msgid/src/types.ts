@@ -12,6 +12,7 @@ export interface Message {
   description?: string
 }
 
+/** Turns a `Message` into the app's language. The adapters build one from an i18n library. */
 export interface Translator {
   /** BCP 47 locale. In Ember, make it tracked so a locale change re-renders. */
   readonly locale: string

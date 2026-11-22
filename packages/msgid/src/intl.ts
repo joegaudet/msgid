@@ -1,3 +1,8 @@
+/**
+ * The FormatJS adapter, for `@formatjs/intl`, react-intl and ember-intl.
+ *
+ * @module msgid/intl
+ */
 import { format } from './format.js'
 import { icu } from './icu.js'
 import type { Message, Translator } from './types.js'
@@ -11,6 +16,7 @@ export interface IntlLike {
   readonly messages?: Record<string, unknown>
   /** ember-intl */
   getTranslation?(id: string, locale: string): unknown
+  /** Formats the message with the given id, or `defaultMessage` (its ICU English) when missing. */
   formatMessage(
     descriptor: { id: string; defaultMessage?: string; description?: string },
     values?: Record<string, unknown>,

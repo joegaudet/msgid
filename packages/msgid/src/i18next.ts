@@ -1,3 +1,8 @@
+/**
+ * The i18next adapter.
+ *
+ * @module msgid/i18next
+ */
 import type { i18n as I18n } from 'i18next'
 import { format } from './format.js'
 import type { Message, Translator } from './types.js'

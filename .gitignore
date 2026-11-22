@@ -4,3 +4,6 @@ dist/
 .DS_Store
 coverage/
 PR_BODY.md
+docs/api/
+docs/api-md/
+_site/

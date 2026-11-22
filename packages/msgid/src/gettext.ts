@@ -1,3 +1,8 @@
+/**
+ * The gettext adapter: a translator over `.po` files converted with `msgid po2json`.
+ *
+ * @module msgid/gettext
+ */
 import Tannin, { type TanninLocaleData } from 'tannin'
 import { format } from './format.js'
 import type { Message, Translator } from './types.js'

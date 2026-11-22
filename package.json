@@ -14,7 +14,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "pnpm -r --filter './packages/*' run test && node --test scripts/*.test.mjs",
-    "release": "pnpm build && node scripts/publish.mjs"
+    "release": "pnpm build && node scripts/publish.mjs",
+    "docs:api": "typedoc && node scripts/llms-full.mjs"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",
@@ -22,6 +23,8 @@
     "@types/node": "^26.6.6",
     "eslint": "^10.14.0",
     "prettier": "^3.9.10",
+    "typedoc": "^0.28.20",
+    "typedoc-plugin-markdown": "^4.14.1",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.72.2"
   }
